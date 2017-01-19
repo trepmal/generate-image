@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>kdl-generate-image</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>A10C6193-C09B-40CF-95D6-5E5AEC76B92B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C41E4C86-8C26-464B-B860-34344921A425</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C41E4C86-8C26-464B-B860-34344921A425</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>227508F0-0E6E-4916-906F-D22A1453E914</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Kailey Lampert</string>
+	<key>description</key>
+	<string>Generate an image</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Generate Image</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>img</string>
+				<key>subtext</key>
+				<string>`img {width}x{height}`</string>
+				<key>text</key>
+				<string>Generate image</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>A10C6193-C09B-40CF-95D6-5E5AEC76B92B</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+/usr/local/bin/convert -size $query -gravity center -background DarkGrey -fill MistyRose4 label:"%wx%h" ~/Desktop/img-$query.png
+
+if [ -f ~/Desktop/img-$query.png ]; then
+
+echo "~/Desktop/img-$query.png created"
+
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>C41E4C86-8C26-464B-B860-34344921A425</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Success</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>227508F0-0E6E-4916-906F-D22A1453E914</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>227508F0-0E6E-4916-906F-D22A1453E914</key>
+		<dict>
+			<key>xpos</key>
+			<integer>520</integer>
+			<key>ypos</key>
+			<integer>30</integer>
+		</dict>
+		<key>A10C6193-C09B-40CF-95D6-5E5AEC76B92B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>90</integer>
+			<key>ypos</key>
+			<integer>30</integer>
+		</dict>
+		<key>C41E4C86-8C26-464B-B860-34344921A425</key>
+		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<integer>30</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>trepmal.com/alfredapp</string>
+</dict>
+</plist>
