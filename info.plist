@@ -108,8 +108,6 @@ if [ ! -z ${args[2]} ]; then
 	textcolor=${args[2]}
 fi
 
-echo "$size - $bgcolor - $textcolor"
-
 /usr/local/bin/convert -size $size -gravity center -background $bgcolor -fill $textcolor label:"\ %wx%h " ~/Desktop/img-$size.png
 
 if [ -f ~/Desktop/img-$size.png ]; then
