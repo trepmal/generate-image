@@ -8,6 +8,19 @@
 	<string>Tools</string>
 	<key>connections</key>
 	<dict>
+		<key>915A9EE4-81DF-49D5-8EBA-515AFCEE249E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>227508F0-0E6E-4916-906F-D22A1453E914</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>A10C6193-C09B-40CF-95D6-5E5AEC76B92B</key>
 		<array>
 			<dict>
@@ -25,7 +38,30 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>227508F0-0E6E-4916-906F-D22A1453E914</string>
+				<string>915A9EE4-81DF-49D5-8EBA-515AFCEE249E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>F06D1C09-3CC4-4781-8AC8-D016226E9499</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F06D1C09-3CC4-4781-8AC8-D016226E9499</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6D6C181D-AF62-4871-8B21-CD66E2BBFEC8</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -45,6 +81,107 @@
 	<string>Generate Image</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Alfred img</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>227508F0-0E6E-4916-906F-D22A1453E914</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>noconvert</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>915A9EE4-81DF-49D5-8EBA-515AFCEE249E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string># look for convert
+convert -version &amp;&gt; /dev/null
+if [ $? -eq 0 ]; then
+	convertpath='convert'
+fi
+
+/usr/local/bin/convert -version &amp;&gt; /dev/null
+if [ $? -eq 0 ]; then
+	convertpath='/usr/local/bin/convert'
+fi
+
+
+##
+if [ -z $convertpath ]; then
+	echo -n 'noconvert'
+	exit;
+fi
+
+
+args=($1)
+
+size=${args[0]}
+bgcolor='DarkGrey'
+textcolor='MistyRose4'
+
+if [ ! -z ${args[1]} ]; then
+	bgcolor=${args[1]}
+fi
+if [ ! -z ${args[2]} ]; then
+	textcolor=${args[2]}
+fi
+
+$convertpath -size $size -gravity center -background $bgcolor -fill $textcolor label:"\ %wx%h " ~/Desktop/img-$size.png
+
+if [ -f ~/Desktop/img-$size.png ]; then
+
+echo "~/Desktop/img-$size.png created"
+
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>C41E4C86-8C26-464B-B860-34344921A425</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -76,86 +213,86 @@
 				<key>removeextension</key>
 				<false/>
 				<key>text</key>
-				<string>{query}</string>
+				<string>`convert` command not found in $PATH</string>
 				<key>title</key>
-				<string>Success</string>
+				<string>Error</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.notification</string>
 			<key>uid</key>
-			<string>227508F0-0E6E-4916-906F-D22A1453E914</string>
+			<string>6D6C181D-AF62-4871-8B21-CD66E2BBFEC8</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>args=($1)
-
-size=${args[0]}
-bgcolor='DarkGrey'
-textcolor='MistyRose4'
-
-if [ ! -z ${args[1]} ]; then
-	bgcolor=${args[1]}
-fi
-if [ ! -z ${args[2]} ]; then
-	textcolor=${args[2]}
-fi
-
-/usr/local/bin/convert -size $size -gravity center -background $bgcolor -fill $textcolor label:"\ %wx%h " ~/Desktop/img-$size.png
-
-if [ -f ~/Desktop/img-$size.png ]; then
-
-echo "~/Desktop/img-$size.png created"
-
-fi</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
 				<integer>0</integer>
+				<key>matchstring</key>
+				<string>noconvert</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>C41E4C86-8C26-464B-B860-34344921A425</string>
+			<string>F06D1C09-3CC4-4781-8AC8-D016226E9499</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string>See readme.md or https://github.com/trepmal/generate-image</string>
 	<key>uidata</key>
 	<dict>
 		<key>227508F0-0E6E-4916-906F-D22A1453E914</key>
 		<dict>
 			<key>xpos</key>
-			<integer>520</integer>
+			<integer>600</integer>
 			<key>ypos</key>
-			<integer>30</integer>
+			<integer>90</integer>
+		</dict>
+		<key>6D6C181D-AF62-4871-8B21-CD66E2BBFEC8</key>
+		<dict>
+			<key>xpos</key>
+			<integer>600</integer>
+			<key>ypos</key>
+			<integer>230</integer>
+		</dict>
+		<key>915A9EE4-81DF-49D5-8EBA-515AFCEE249E</key>
+		<dict>
+			<key>xpos</key>
+			<integer>490</integer>
+			<key>ypos</key>
+			<integer>120</integer>
 		</dict>
 		<key>A10C6193-C09B-40CF-95D6-5E5AEC76B92B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>90</integer>
+			<integer>40</integer>
 			<key>ypos</key>
-			<integer>30</integer>
+			<integer>160</integer>
 		</dict>
 		<key>C41E4C86-8C26-464B-B860-34344921A425</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<integer>200</integer>
 			<key>ypos</key>
-			<integer>30</integer>
+			<integer>160</integer>
+		</dict>
+		<key>F06D1C09-3CC4-4781-8AC8-D016226E9499</key>
+		<dict>
+			<key>xpos</key>
+			<integer>490</integer>
+			<key>ypos</key>
+			<integer>260</integer>
 		</dict>
 	</dict>
+	<key>version</key>
+	<string></string>
 	<key>webaddress</key>
 	<string>trepmal.com/alfredapp</string>
 </dict>
