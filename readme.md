@@ -2,6 +2,8 @@
 
 This Alfred Workflow requires the [`convert`](https://www.imagemagick.org/script/convert.php) command to be available. 
 
+If you use [Homebrew](http://brew.sh), `brew install imagemagick` will install the `convert` command.
+
 ## Download
 
 Download [generate-image.alfredworkflow](https://github.com/trepmal/generate-image/raw/master/generate-image.alfredworkflow)
