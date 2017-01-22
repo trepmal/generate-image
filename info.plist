@@ -53,7 +53,7 @@
 				<key>keyword</key>
 				<string>img</string>
 				<key>subtext</key>
-				<string>`img {width}x{height}`</string>
+				<string>`img {w}x{h} [bgcolor] [textcolor]`</string>
 				<key>text</key>
 				<string>Generate image</string>
 				<key>withspace</key>
@@ -65,37 +65,6 @@
 			<string>A10C6193-C09B-40CF-95D6-5E5AEC76B92B</string>
 			<key>version</key>
 			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>query=$1
-
-/usr/local/bin/convert -size $query -gravity center -background DarkGrey -fill MistyRose4 label:"%wx%h" ~/Desktop/img-$query.png
-
-if [ -f ~/Desktop/img-$query.png ]; then
-
-echo "~/Desktop/img-$query.png created"
-
-fi</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>C41E4C86-8C26-464B-B860-34344921A425</string>
-			<key>version</key>
-			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -117,6 +86,50 @@ fi</string>
 			<string>227508F0-0E6E-4916-906F-D22A1453E914</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>args=($1)
+
+size=${args[0]}
+bgcolor='DarkGrey'
+textcolor='MistyRose4'
+
+if [ ! -z ${args[1]} ]; then
+	bgcolor=${args[1]}
+fi
+if [ ! -z ${args[2]} ]; then
+	textcolor=${args[2]}
+fi
+
+echo "$size - $bgcolor - $textcolor"
+
+/usr/local/bin/convert -size $size -gravity center -background $bgcolor -fill $textcolor label:"\ %wx%h " ~/Desktop/img-$size.png
+
+if [ -f ~/Desktop/img-$size.png ]; then
+
+echo "~/Desktop/img-$size.png created"
+
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>C41E4C86-8C26-464B-B860-34344921A425</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 	</array>
 	<key>readme</key>
